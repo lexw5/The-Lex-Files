@@ -24,6 +24,7 @@ function LeaderboardPage() {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
+        console.log("API_BASE =", import.meta.env.VITE_API_BASE_URL);
         const response = await fetch(`${API_BASE}/api/players`);
         if (!response.ok) {
           throw new Error(`Failed to fetch players: ${response.status}`);
