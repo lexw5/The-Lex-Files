@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PlayerForm from "../components/PlayerForm";
 
-const API_BASE = "http://localhost:5001";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 function PlayersPage({ isAdmin, adminCredentials }) {  
   const [players, setPlayers] = useState([]);

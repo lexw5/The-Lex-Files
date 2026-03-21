@@ -4,15 +4,30 @@ import dotenv from "dotenv";
 import supabase from "./supabaseClient.js";
 import { recalculateAllStats } from "./recalculateStats.js";
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001;
 
-app.use(cors({ origin: "http://localhost:5173" }));
+const PORT = process.env.PORT || 5001;
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "volleyball123";
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    }
+  })
+);
+
 app.use(express.json());
 
 function requireAdmin(req, res, next) {
