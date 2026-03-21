@@ -27,7 +27,6 @@ function PlayersPage({ isAdmin, adminCredentials }) {
 
   useEffect(() => {
     fetchPlayers();
-    fetchGames();
   }, []);
 
   useEffect(() => {
