@@ -55,6 +55,11 @@ function GamesPage({ isAdmin, adminCredentials }) {
   };
 
   useEffect(() => {
+    fetchPlayers();
+    fetchGames();
+  }, []);
+
+  useEffect(() => {
     if (!isAdmin) {
         setEditingGameId(null);
     }
