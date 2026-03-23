@@ -166,7 +166,7 @@ function PlayersPage({ isAdmin, adminCredentials }) {
                             ? player.tags.join(", ")
                             : "—"}
                         </td>
-                        <td>{plaeyer.manual_offset}</td>
+                        <td>{player.manual_offset}</td>
                         {isAdmin && (
                         <td>
                             <button onClick={() => handleEditPlayer(player)}>Edit</button>
