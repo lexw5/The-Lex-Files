@@ -366,6 +366,7 @@ app.put("/api/players/:id", requireAdmin, async (req, res) => {
     const updateFields = {
         name: trimmedName,
         tags: safeTags,
+        active: active,
         manual_offset: normalizedManualOffset
     };
 
