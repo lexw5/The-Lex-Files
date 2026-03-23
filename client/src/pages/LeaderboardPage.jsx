@@ -87,7 +87,7 @@ function LeaderboardPage() {
 
   return (
     <div>
-      <h1>Leaderboard</h1>
+      <h1>Top 25 Leaderboard</h1>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
