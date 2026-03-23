@@ -152,7 +152,7 @@ function PlayersPage({ isAdmin, adminCredentials }) {
                     .map((player) => (
                     <tr key={player.id}>
                         <td>{player.name}</td>
-                        <td>{player.elo}</td>
+                        <td>{player.elo + (player.manual_offset ?? 0)}</td>
                         <td>{player.games_played}</td>
                         <td>{player.wins}</td>
                         <td>{player.losses}</td>
