@@ -9,18 +9,21 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [active, setActive] = useState(true);
+  const [manualOffset, setManualOffset] = useState(0);
 
   useEffect(() => {
     if (editingPlayer) {
       setName(editingPlayer.name || "");
       setSelectedTags(editingPlayer.tags || []);
       setActive(editingPlayer.active ?? true);
+      setManualOffset(editingPlayer.manual_offset ?? 0);
       setError("");
       setMessage("");
     } else {
       setName("");
       setSelectedTags([]);
       setActive(true);
+      setManualOffset(0);
     }
   }, [editingPlayer]);
 
@@ -61,7 +64,8 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
         body: JSON.stringify({
           name,
           tags: selectedTags,
-          active
+          active,
+          manual_offset: Number(manualOffset)
         })
       });
 
@@ -79,6 +83,7 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
         setName("");
         setSelectedTags([]);
         setActive(true);
+        setManualOffset(0);
 
       }
 
@@ -128,6 +133,20 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
           {" "}Active Player
         </label>
       </div>
+
+      {isAdmin && (
+        <div style={{ marginBottom: "12px" }}>
+          <label>
+            Manual ELO Offset
+            <input
+              type="number"
+              value={manualOffset}
+              onChange={(e) => setManualOffset(e.target.value)}
+              style={{ marginLeft: "10px" }}
+            />
+          </label>
+        </div>
+      )}
 
       <button type="submit">
         {editingPlayer ? "Save Player" : "Add Player"}
