@@ -24,7 +24,7 @@ function LeaderboardTable({ players, loading }) {
         
         {players
         .filter((player) => player.active) // only active
-        .sort((a, b) => b.elo - a.elo)     // highest ELO first
+        .sort((a, b) => (b.elo + (b.manual_offset ?? 0)) - (a.elo + (a.manual_offset ?? 0)))     // highest ELO first
         .slice(0, 25)                      // top 25
         .map((player, index) => (
           <tr key={player.id}>
