@@ -38,12 +38,14 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
       "Content-Type": "application/json"
     };
 
+    const isEditing = !!editingPlayer;
+
+
     if (isEditing && isAdmin) {
       headers["x-admin-username"] = adminCredentials.username;
       headers["x-admin-password"] = adminCredentials.password;
     }
 
-    const isEditing = !!editingPlayer;
     const url = isEditing
       ? `${API_BASE}/api/players/${editingPlayer.id}`
       : `${API_BASE}/api/players`;
