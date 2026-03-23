@@ -20,8 +20,12 @@ function LeaderboardTable({ players, loading }) {
           <th>Tags</th>
         </tr>
       </thead>
-      <tbody>
-        {players.map((player, index) => (
+      <tbody>        
+        {players
+        .filter((player) => player.active) // only active
+        .sort((a, b) => (b.elo + (b.manual_offset ?? 0)) - (a.elo + (a.manual_offset ?? 0)))     // highest ELO first
+        .slice(0, 25)                      // top 25
+        .map((player) => (
           <tr key={player.id}>
             <td>{index + 1}</td>
             <td>{player.name}</td>
