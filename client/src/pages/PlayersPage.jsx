@@ -141,38 +141,40 @@ function PlayersPage({ isAdmin, adminCredentials }) {
                     <th>Games</th>
                     <th>Wins</th>
                     <th>Losses</th>
+                    <th>Status</th>
                     <th>Tags</th>
                     {isAdmin && <th>Actions</th>}
                 </tr>
             </thead>
             <tbody>
-              {players
-                .filter((player) => !showActiveOnly || player.active)
-                .map((player) => (
-                <tr key={player.id}>
-                  <td>{player.name}</td>
-                  <td>{player.elo}</td>
-                  <td>{player.games_played}</td>
-                  <td>{player.wins}</td>
-                  <td>{player.losses}</td>
-                  <td>
-                    {player.tags && player.tags.length > 0
-                      ? player.tags.join(", ")
-                      : "—"}
-                  </td>
-                  {isAdmin && (
-                    <td>
-                        <button onClick={() => handleEditPlayer(player)}>Edit</button>
-                        <button
-                        onClick={() => handleDeletePlayer(player.id)}
-                        style={{ marginLeft: "10px" }}
-                        >
-                        Delete
-                        </button>
-                    </td>
-                  )}
-                </tr>
-              ))}
+                {players
+                    .filter((player) => !showActiveOnly || player.active)
+                    .map((player) => (
+                    <tr key={player.id}>
+                        <td>{player.name}</td>
+                        <td>{player.elo}</td>
+                        <td>{player.games_played}</td>
+                        <td>{player.wins}</td>
+                        <td>{player.losses}</td>
+                        <td>{player.active ? "Active" : "Inactive"}</td>
+                        <td>
+                        {player.tags && player.tags.length > 0
+                            ? player.tags.join(", ")
+                            : "—"}
+                        </td>
+                        {isAdmin && (
+                        <td>
+                            <button onClick={() => handleEditPlayer(player)}>Edit</button>
+                            <button
+                            onClick={() => handleDeletePlayer(player.id)}
+                            style={{ marginLeft: "10px" }}
+                            >
+                            Delete
+                            </button>
+                        </td>
+                        )}
+                    </tr>
+                ))}
             </tbody>
           </table>
         )}
