@@ -144,6 +144,7 @@ function PlayersPage({ isAdmin, adminCredentials }) {
                     <th>Losses</th>
                     <th>Status</th>
                     <th>Tags</th>
+                    <th>Offset</th>
                     {isAdmin && <th>Actions</th>}
                 </tr>
             </thead>
@@ -165,6 +166,7 @@ function PlayersPage({ isAdmin, adminCredentials }) {
                             ? player.tags.join(", ")
                             : "—"}
                         </td>
+                        <td>{plaeyer.manual_offset}</td>
                         {isAdmin && (
                         <td>
                             <button onClick={() => handleEditPlayer(player)}>Edit</button>
