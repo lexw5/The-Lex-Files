@@ -136,6 +136,7 @@ function PlayersPage({ isAdmin, adminCredentials }) {
           >
             <thead>
                 <tr>
+                    <th>Rank</th>
                     <th>Name</th>
                     <th>ELO</th>
                     <th>Games</th>
@@ -149,8 +150,10 @@ function PlayersPage({ isAdmin, adminCredentials }) {
             <tbody>
                 {players
                     .filter((player) => !showActiveOnly || player.active)
-                    .map((player) => (
+                    .sort((a, b) => (b.elo + (b.manual_offset ?? 0)) - (a.elo + (a.manual_offset ?? 0)))
+                    .map((player, index) => (
                     <tr key={player.id}>
+                        <td>{index + 1}</td>
                         <td>{player.name}</td>
                         <td>{player.elo + (player.manual_offset ?? 0)}</td>
                         <td>{player.games_played}</td>
