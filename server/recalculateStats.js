@@ -98,7 +98,8 @@ export async function recalculateAllStats() {
     games_played: player.games_played,
     wins: player.wins,
     losses: player.losses,
-    elo: player.elo
+    elo: player.elo,
+    manual_offset: player.manual_offset
   }));
 
   for (const player of updatedPlayers) {
@@ -108,7 +109,7 @@ export async function recalculateAllStats() {
         games_played: player.games_played,
         wins: player.wins,
         losses: player.losses,
-        elo: player.elo
+        elo: player.elo + player.manual_offset
       })
       .eq("id", player.id);
 
