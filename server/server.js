@@ -283,9 +283,17 @@ app.put("/api/games/:id", requireAdmin, async (req, res) => {
 
 app.post("/api/players", async (req, res) => {
   try {
-    const { name, tags, active } = req.body;
+    const { name, tags, active, manual_offset } = req.body;
     const normalizedActive = active === undefined ? true : !!active;
 
+    const normalizedManualOffset =
+    manual_offset === undefined || manual_offset === null || manual_offset === ""
+        ? 0
+        : Number(manual_offset);
+
+    if (Number.isNaN(normalizedManualOffset)) {
+        return res.status(400).json({ error: "manual_offset must be a number." });
+    }
 
     const trimmedName = String(name || "").trim();
 
@@ -308,7 +316,8 @@ app.post("/api/players", async (req, res) => {
           losses: 0,
           elo: 1000,
           tags: safeTags,
-          active: normalizedActive
+          active: normalizedActive,
+          manual_offset: normalizedManualOffset
         }
       ])
       .select();
@@ -327,7 +336,16 @@ app.post("/api/players", async (req, res) => {
 app.put("/api/players/:id", requireAdmin, async (req, res) => {
   try {
     const playerId = Number(req.params.id);
-    const { name, tags, active } = req.body;
+    const { name, tags, active, manual_offset } = req.body;
+
+    const normalizedManualOffset =
+    manual_offset === undefined || manual_offset === null || manual_offset === ""
+        ? 0
+        : Number(manual_offset);
+
+    if (Number.isNaN(normalizedManualOffset)) {
+        return res.status(400).json({ error: "manual_offset must be a number." });
+    }
 
     if (!Number.isInteger(playerId) || playerId <= 0) {
       return res.status(400).json({ error: "Invalid player id." });
@@ -347,7 +365,8 @@ app.put("/api/players/:id", requireAdmin, async (req, res) => {
 
     const updateFields = {
         name: trimmedName,
-        tags: safeTags
+        tags: safeTags,
+        manual_offset: normalizedManualOffset
     };
 
     if (active !== undefined) {
