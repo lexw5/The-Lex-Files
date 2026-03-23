@@ -3,19 +3,22 @@ function RecentGamesList({
   loading,
   onEdit,
   onDelete,
-  showActions = true
+  showActions = true,
+  limit = null
 }) {
   if (loading) {
     return <p>Loading games...</p>;
   }
 
-  if (games.length === 0) {
+  const displayedGames = limit ? games.slice(0, limit) : games;
+
+  if (displayedGames.length === 0) {
     return <p>No games yet.</p>;
   }
 
   return (
     <div style={{ display: "grid", gap: "10px" }}>
-      {games.map((game) => (
+      {displayedGames.map((game) => (
         <div
           key={game.id}
           style={{
