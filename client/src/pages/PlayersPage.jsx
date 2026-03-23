@@ -147,7 +147,7 @@ function PlayersPage({ isAdmin, adminCredentials }) {
             </thead>
             <tbody>
               {players
-                .filter((player) => (showActiveOnly ? player.active : true))
+                .filter((player) => !showActiveOnly || player.active)
                 .map((player) => (
                 <tr key={player.id}>
                   <td>{player.name}</td>
