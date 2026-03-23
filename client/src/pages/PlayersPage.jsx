@@ -9,6 +9,7 @@ function PlayersPage({ isAdmin, adminCredentials }) {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [editingPlayer, setEditingPlayer] = useState(null);
+  const [showActiveOnly, setShowActiveOnly] = useState(false);
 
   const fetchPlayers = async () => {
     try {
@@ -110,9 +111,20 @@ function PlayersPage({ isAdmin, adminCredentials }) {
 
       <section>
         <h2>All Players</h2>
-
+    
         {error && <p style={{ color: "red" }}>{error}</p>}
         {message && <p style={{ color: "green" }}>{message}</p>}
+
+        <div style={{ marginBottom: "12px" }}>
+            <label>
+                <input
+                type="checkbox"
+                checked={showActiveOnly}
+                onChange={() => setShowActiveOnly((prev) => !prev)}
+                />
+                {" "}Show Active Players Only
+            </label>
+        </div>
 
         {loading ? (
           <p>Loading players...</p>
@@ -134,7 +146,9 @@ function PlayersPage({ isAdmin, adminCredentials }) {
                 </tr>
             </thead>
             <tbody>
-              {players.map((player) => (
+              {players
+                .filter((player) => (showActiveOnly ? player.active : true))
+                .map((player) => (
                 <tr key={player.id}>
                   <td>{player.name}</td>
                   <td>{player.elo}</td>

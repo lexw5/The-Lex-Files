@@ -107,11 +107,9 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
         <div style={{ marginTop: "8px", display: "grid", gap: "6px" }}>
           {TAG_OPTIONS.map((tag) => (
             <label key={tag}>
-              <input
-                type="checkbox"
-                checked={selectedTags.includes(tag)}
-                onChange={() => toggleTag(tag)}
-              />{" "}
+              <button onClick={() => toggleActive(player)}>
+                {player.active ? "Deactivate" : "Activate"}
+              </button>
               {tag}
             </label>
           ))}
