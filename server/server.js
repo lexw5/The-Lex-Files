@@ -283,7 +283,9 @@ app.put("/api/games/:id", requireAdmin, async (req, res) => {
 
 app.post("/api/players", async (req, res) => {
   try {
-    const { name, tags } = req.body;
+    const { name, tags, active } = req.body;
+    const normalizedActive = active === undefined ? true : !!active;
+
 
     const trimmedName = String(name || "").trim();
 
@@ -305,7 +307,8 @@ app.post("/api/players", async (req, res) => {
           wins: 0,
           losses: 0,
           elo: 1000,
-          tags: safeTags
+          tags: safeTags,
+          active: normalizedActive
         }
       ])
       .select();
@@ -324,7 +327,7 @@ app.post("/api/players", async (req, res) => {
 app.put("/api/players/:id", requireAdmin, async (req, res) => {
   try {
     const playerId = Number(req.params.id);
-    const { name, tags } = req.body;
+    const { name, tags, active } = req.body;
 
     if (!Number.isInteger(playerId) || playerId <= 0) {
       return res.status(400).json({ error: "Invalid player id." });
@@ -341,14 +344,21 @@ app.put("/api/players/:id", requireAdmin, async (req, res) => {
       ? tags.filter((tag) => allowedTags.includes(tag))
       : [];
 
-    const { data, error } = await supabase
-      .from("players")
-      .update({
+
+    const updateFields = {
         name: trimmedName,
         tags: safeTags
-      })
-      .eq("id", playerId)
-      .select();
+    };
+
+    if (active !== undefined) {
+        updateFields.active = !!active;
+    }
+
+    const { data, error } = await supabase
+        .from("players")
+        .update(updateFields)
+        .eq("id", playerId)
+        .select();
 
     if (error) {
       return res.status(500).json({ error: error.message });

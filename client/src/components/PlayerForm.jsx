@@ -8,16 +8,19 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
   const [selectedTags, setSelectedTags] = useState([]);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [active, setActive] = useState(true);
 
   useEffect(() => {
     if (editingPlayer) {
       setName(editingPlayer.name || "");
       setSelectedTags(editingPlayer.tags || []);
+      setActive(editingPlayer.active ?? true);
       setError("");
       setMessage("");
     } else {
       setName("");
       setSelectedTags([]);
+      setActive(true);
     }
   }, [editingPlayer]);
 
@@ -57,7 +60,8 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
         headers,
         body: JSON.stringify({
           name,
-          tags: selectedTags
+          tags: selectedTags,
+          active
         })
       });
 
@@ -74,6 +78,8 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
       if (!isEditing) {
         setName("");
         setSelectedTags([]);
+        setActive(true);
+
       }
 
       if (onPlayerSaved) {
@@ -110,6 +116,17 @@ function PlayerForm({ editingPlayer, onPlayerSaved, onCancelEdit, adminCredentia
             </label>
           ))}
         </div>
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={active}
+            onChange={() => setActive((prev) => !prev)}
+          />
+          {" "}Active Player
+        </label>
       </div>
 
       <button type="submit">
