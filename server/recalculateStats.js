@@ -86,10 +86,10 @@ export async function recalculateAllStats() {
       p2.losses += 1;
     }
 
-    p1.elo = max(0, Number((p1.elo + team1Change).toFixed(2)));
-    p2.elo = max(0, Number((p2.elo + team1Change).toFixed(2)));
-    p3.elo = max(0, Number((p3.elo + team2Change).toFixed(2)));
-    p4.elo = max(0, Number((p4.elo + team2Change).toFixed(2)));
+    p1.elo = Math.max(0, Number((p1.elo + team1Change).toFixed(2)));
+    p2.elo = Math.max(0, Number((p2.elo + team1Change).toFixed(2)));
+    p3.elo = Math.max(0, Number((p3.elo + team2Change).toFixed(2)));
+    p4.elo = Math.max(0, Number((p4.elo + team2Change).toFixed(2)));
   }
 
   const updatedPlayers = Object.values(playerMap).map((player) => ({
