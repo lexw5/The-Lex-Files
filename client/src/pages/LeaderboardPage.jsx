@@ -148,6 +148,7 @@ function LeaderboardPage() {
           onEdit={null}
           onDelete={null}
           showActions={false}
+          limit={5}
         />
       </section>
     </div>
