@@ -9,8 +9,8 @@ dotenv.config();
 const app = express();
 
 const PORT = process.env.PORT || 5001;
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "volleyball123";
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 const allowedOrigins = [
   "http://localhost:5173",
